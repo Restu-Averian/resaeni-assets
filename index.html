@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resaeni Assets Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #0b0f19;
+        --card-bg: #111827;
+        --border-color: #1f293d;
+        --text-main: #f3f4f6;
+        --text-muted: #9ca3af;
+        --accent: #6366f1;
+        --accent-hover: #4f46e5;
+        --accent-glow: rgba(99, 102, 241, 0.15);
+        --success: #10b981;
+        --warning: #f59e0b;
+        --error: #ef4444;
+        --code-bg: #070a13;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        font-family:
+          "Plus Jakarta Sans",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        min-height: 100vh;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      header {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .header-info {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .title-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      h1 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: -0.02em;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+      }
+
+      .badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--success);
+        box-shadow: 0 0 8px var(--success);
+      }
+
+      .meta-text {
+        font-size: 0.825rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .meta-item strong {
+        color: var(--text-main);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      button {
+        background: #1e293b;
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      button:hover {
+        background: #334155;
+        border-color: #475569;
+      }
+
+      button.primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      button.primary:hover {
+        background: var(--accent-hover);
+        box-shadow: 0 0 16px var(--accent-glow);
+      }
+
+      .editor-card {
+        background: var(--code-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .editor-toolbar {
+        background: #0d1322;
+        border-bottom: 1px solid var(--border-color);
+        padding: 10px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .editor-tabs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .tab-tag {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-family: "Fira Code", monospace;
+        font-size: 0.75rem;
+        color: #cbd5e1;
+      }
+
+      pre#output {
+        padding: 20px;
+        font-family: "Fira Code", "Courier New", Courier, monospace;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: #e2e8f0;
+        overflow-x: auto;
+        white-space: pre;
+        max-height: calc(100vh - 200px);
+      }
+
+      /* JSON Syntax Highlight Styling */
+      .json-key {
+        color: #38bdf8;
+      }
+      .json-string {
+        color: #a3e635;
+      }
+      .json-number {
+        color: #f472b6;
+      }
+      .json-boolean {
+        color: #fb923c;
+      }
+      .json-null {
+        color: #94a3b8;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #1e293b;
+        border: 1px solid var(--accent);
+        color: #fff;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.25s ease;
+        pointer-events: none;
+        z-index: 100;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-info">
+          <div class="title-row">
+            <h1>Public Assets Explorer</h1>
+            <span class="badge">
+              <span class="badge-dot" id="status-dot"></span>
+              <span id="status-text">Connecting...</span>
+            </span>
+          </div>
+          <div class="meta-text">
+            <span class="meta-item"
+              >Repository:
+              <strong id="meta-repo">Restu-Averian/resaeni-assets</strong></span
+            >
+            <span class="meta-item"
+              >Branch: <strong id="meta-branch">main</strong></span
+            >
+            <span class="meta-item"
+              >Total Files: <strong id="meta-total">-</strong></span
+            >
+            <span class="meta-item"
+              >Updated: <strong id="meta-time">-</strong></span
+            >
+          </div>
+        </div>
+        <div class="actions">
+          <button id="btn-refresh" title="Reload from GitHub API">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+              <path d="M21 3v5h-5" />
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
+              <path d="M3 21v-5h5" />
+            </svg>
+            Refresh
+          </button>
+          <button
+            id="btn-copy"
+            class="primary"
+            title="Copy raw JSON to clipboard"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path
+                d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+              />
+            </svg>
+            Copy JSON
+          </button>
+        </div>
+      </header>
+
+      <div class="editor-card">
+        <div class="editor-toolbar">
+          <div class="editor-tabs">
+            <span class="tab-tag">json</span>
+            <span>output preview</span>
+          </div>
+          <span id="response-size">0 bytes</span>
+        </div>
+        <pre id="output">Loading asset tree from GitHub...</pre>
+      </div>
+    </div>
+
+    <div id="toast" class="toast">JSON copied to clipboard!</div>
+
+    <script>
+      const CONFIG = {
+        owner: "Restu-Averian",
+        repo: "resaeni-assets",
+        branch: "main",
+      };
+
+      // Allow URL params override e.g. ?repo=...&branch=...
+      const urlParams = new URLSearchParams(window.location.search);
+      const owner = urlParams.get("owner") || CONFIG.owner;
+      const repo = urlParams.get("repo") || CONFIG.repo;
+      const branch = urlParams.get("branch") || CONFIG.branch;
+
+      const outputEl = document.getElementById("output");
+      const statusTextEl = document.getElementById("status-text");
+      const statusDotEl = document.getElementById("status-dot");
+      const metaRepoEl = document.getElementById("meta-repo");
+      const metaBranchEl = document.getElementById("meta-branch");
+      const metaTotalEl = document.getElementById("meta-total");
+      const metaTimeEl = document.getElementById("meta-time");
+      const responseSizeEl = document.getElementById("response-size");
+      const btnCopy = document.getElementById("btn-copy");
+      const btnRefresh = document.getElementById("btn-refresh");
+      const toastEl = document.getElementById("toast");
+
+      metaRepoEl.textContent = `${owner}/${repo}`;
+      metaBranchEl.textContent = branch;
+
+      let rawJsonData = null;
+
+      function buildCleanTree(paths) {
+        const root = {};
+        for (const item of paths) {
+          const parts = item.split("/");
+          let current = root;
+          for (let i = 0; i < parts.length; i++) {
+            const part = parts[i];
+            if (i === parts.length - 1) {
+              if (!current._files) current._files = [];
+              current._files.push(part);
+            } else {
+              if (!current[part]) current[part] = {};
+              current = current[part];
+            }
+          }
+        }
+
+        function simplify(node) {
+          const keys = Object.keys(node);
+          if (keys.length === 1 && keys[0] === "_files") {
+            return node._files;
+          }
+          const result = {};
+          for (const key of keys) {
+            if (key === "_files") {
+              result["files"] = node._files;
+            } else {
+              result[key] = simplify(node[key]);
+            }
+          }
+          return result;
+        }
+        return simplify(root);
+      }
+
+      function syntaxHighlight(json) {
+        if (typeof json !== "string") {
+          json = JSON.stringify(json, null, 2);
+        }
+        json = json
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+        return json.replace(
+          /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+          function (match) {
+            let cls = "json-number";
+            if (/^"/.test(match)) {
+              if (/:$/.test(match)) {
+                cls = "json-key";
+              } else {
+                cls = "json-string";
+              }
+            } else if (/true|false/.test(match)) {
+              cls = "json-boolean";
+            } else if (/null/.test(match)) {
+              cls = "json-null";
+            }
+            return '<span class="' + cls + '">' + match + "</span>";
+          },
+        );
+      }
+
+      function formatBytes(bytes, decimals = 2) {
+        if (!+bytes) return "0 Bytes";
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+      }
+
+      async function loadAssetTree() {
+        statusTextEl.textContent = "Fetching...";
+        statusDotEl.style.backgroundColor = "var(--warning)";
+        statusDotEl.style.boxShadow = "0 0 8px var(--warning)";
+        outputEl.textContent = "Fetching tree structure from GitHub API...";
+
+        const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${branch}?recursive=1`;
+
+        try {
+          const res = await fetch(apiUrl);
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            throw new Error(
+              errData.message || `HTTP ${res.status} ${res.statusText}`,
+            );
+          }
+
+          const data = await res.json();
+          const publicBlobs = (data.tree || []).filter((item) => {
+            return (
+              item.type === "blob" &&
+              item.path.startsWith("public/") &&
+              !item.path.split("/").some((segment) => segment.startsWith("."))
+            );
+          });
+
+          const files = publicBlobs.map((item) => {
+            const relativePath = item.path.replace(/^public\//, "");
+            return {
+              path: item.path,
+              relativePath: relativePath,
+              name: relativePath.split("/").pop(),
+              size: item.size,
+              sizeFormatted: formatBytes(item.size),
+              rawUrl: `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${item.path}`,
+              url: `./${item.path}`,
+            };
+          });
+
+          const cleanPaths = publicBlobs.map((f) =>
+            f.path.replace(/^public\//, ""),
+          );
+          const nestedTree = buildCleanTree(cleanPaths);
+
+          const now = new Date();
+          const payload = {
+            meta: {
+              repository: `${owner}/${repo}`,
+              branch: branch,
+              updated_at: now.toISOString(),
+              total_files: files.length,
+              api_source: apiUrl,
+            },
+            tree: nestedTree,
+            files: files,
+          };
+
+          rawJsonData = JSON.stringify(payload, null, 2);
+          outputEl.innerHTML = syntaxHighlight(payload);
+
+          // Update UI Meta
+          metaTotalEl.textContent = `${files.length} items`;
+          metaTimeEl.textContent = now.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          });
+          statusTextEl.textContent = "Live Synced";
+          statusDotEl.style.backgroundColor = "var(--success)";
+          statusDotEl.style.boxShadow = "0 0 8px var(--success)";
+          responseSizeEl.textContent = formatBytes(
+            new Blob([rawJsonData]).size,
+          );
+        } catch (err) {
+          console.error("Error fetching assets:", err);
+          statusTextEl.textContent = "Fetch Error";
+          statusDotEl.style.backgroundColor = "var(--error)";
+          statusDotEl.style.boxShadow = "0 0 8px var(--error)";
+
+          const errorPayload = {
+            error: true,
+            message: err.message,
+            suggestion:
+              "GitHub API might have rate limited this IP or the repo/branch was not found.",
+            target: `${owner}/${repo}@${branch}`,
+            timestamp: new Date().toISOString(),
+          };
+
+          rawJsonData = JSON.stringify(errorPayload, null, 2);
+          outputEl.innerHTML = syntaxHighlight(errorPayload);
+        }
+      }
+
+      function showToast(message) {
+        toastEl.textContent = message;
+        toastEl.classList.add("show");
+        setTimeout(() => {
+          toastEl.classList.remove("show");
+        }, 2000);
+      }
+
+      btnCopy.addEventListener("click", async () => {
+        if (!rawJsonData) return;
+        try {
+          await navigator.clipboard.writeText(rawJsonData);
+          showToast("JSON copied to clipboard!");
+        } catch (e) {
+          // Fallback
+          const textarea = document.createElement("textarea");
+          textarea.value = rawJsonData;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+          showToast("JSON copied to clipboard!");
+        }
+      });
+
+      btnRefresh.addEventListener("click", () => {
+        loadAssetTree();
+      });
+
+      // Auto-fetch on page load
+      loadAssetTree();
+    </script>
+  </body>
+</html>
